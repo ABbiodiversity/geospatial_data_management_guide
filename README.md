@@ -6,7 +6,7 @@
 ![Lifecycle](https://img.shields.io/badge/Lifecycle-Experimental-orange)
 ![Languages](https://img.shields.io/badge/Languages-R-blue)
 
-Guidelines for the internal management of geospatial data and a catalog snapshot of all of geospatial data gathered and managed by the ABMI Science Centre.
+Guidelines for the internal management of geospatial data at the ABMI Science Centre, along with a catalogue snapshot of the geospatial datasets the Science Centre holds and maintains.
 
 ---
 
