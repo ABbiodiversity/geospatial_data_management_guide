@@ -79,9 +79,9 @@ Once downloaded, data should be stored in a spatial data directory in folders or
 
 ### Products and variants
 
-Within a thematic folder, each **product** gets one folder. A product
+Within a thematic folder, each product gets one folder. A product
 is the thing the provider published: ClimateNA, ABMI Human Footprint,
-NTEMS land cover. Inside it, each **variant** gets its own subfolder. A
+NTEMS land cover. Inside it, each variant gets its own subfolder. A
 variant is that same product at one resolution, CRS, and grid
 alignment.
 
@@ -138,18 +138,14 @@ product folder with at least one variant subfolder, a `readme.txt` at
 both levels, and files named with the variant suffix. Delete the
 staged copy once the move is verified.
 
-A `_temp/` subfolder that has not changed in months is either abandoned
-work or undocumented data that someone is quietly relying on. Both are
-worth resolving.
-
 ---
 
 ## 4. Metadata Standards
 
 Metadata is recorded in plain-text `readme.txt` files that comply with
-the **[North American Profile (NAP) of the ISO 19115: Geographic
+the [North American Profile (NAP) of the ISO 19115: Geographic
 Information – Metadata
-Standard](https://www.fgdc.gov/standards/projects/incits-l1-standards-projects/NAP-Metadata)**.
+Standard](https://www.fgdc.gov/standards/projects/incits-l1-standards-projects/NAP-Metadata).
 
 Metadata is split across two levels, matching the product/variant
 directory structure described in
