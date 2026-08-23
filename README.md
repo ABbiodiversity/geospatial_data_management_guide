@@ -1,4 +1,4 @@
-<img src="man/figures/abmi_logo.png" alt="ABMI Logo" width="300" style="margin-top: 40px;">
+<img src="figures/abmi_logo.png" alt="ABMI Logo" width="300" style="margin-top: 40px;">
 
 
 # Geospatial Data Catalog and Management Guide
