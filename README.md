@@ -8,19 +8,8 @@
 # Geospatial Data Catalog and Management Guide
 ![In Development](https://img.shields.io/badge/Status-In%20Development-yellow)
 
-Here, we provide of catalog of all of geospatial data gathered and managed by the Science Centre, and R package/vignette for querying the catalog, links to external catalogs, and guide for the internal management of geospatial data.
+Here, are guidelines for the internal management of geospatial data and a catalog snapshot of all of geospatial data gathered and managed by the ABMI Science Centre.
 
-The catalog documents all spatial data that has been pre-processed for the ABMI Science Centre. 
-
-The catalog includes:
-- Metadata for each dataset.
-- Relative paths to the data stored on the Science Centre's internal server.
-- Links to associated preprocessing scripts.
-
-In addition, a working list of predictor variables [here](https://github.com/bgcasey/spatial_data_catalog/blob/main/predictor_variable_list.csv).
-
-This is a sibling repository to the Science Centre's [Geospatial Preprocessing and Extraction Toolkit](https://github.com/bgcasey/geospatial_preprocessing_and_extraction_toolkit).
-The toolkit contains genalized preprossing scripts, Google Earth Engine functions, and a vignette for summarizing spatial data to points and polygons using R.
 
 </br>
 
@@ -36,8 +25,8 @@ The toolkit contains genalized preprossing scripts, Google Earth Engine function
 ## 1. Data Catalogs
 
 ### Internal Catalog
-- [Predictor Variable List](predictor_variable_list.csv)
-- Spatial data stored on the Science Centre's server.
+- Spatial data stored on the Science Centre's server: 
+  - [Predictor Variable List](predictor_variable_list.csv)
 
 ### External Catalogs
 
@@ -56,9 +45,7 @@ The toolkit contains genalized preprossing scripts, Google Earth Engine function
 
 ## 2. Scripts for Extracting and Processing Spatial Data
 
-- [Google Earth Engine Functions](https://github.com/bgcasey/google_earth_engine_functions)
-- R
-- ArcGIS Python
+- [internal `sciSpatialR` package](https://github.com/ABbiodiversity/sciSpatialR)
 
 ---
 
@@ -171,7 +158,6 @@ contacts, or citation; it points at the parent record instead.
 | Lineage — this processing step | — | ✓ |
 | Positional accuracy — of this variant | — | ✓ |
 | Known caveats | — | ✓ |
-| Format, data type, size | — | ✓ |
 
 Two rules keep the split honest:
 
