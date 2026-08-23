@@ -102,9 +102,11 @@ Class Definitions: [Value-to-class lookup for categorical bands, or
     "None"]
     Every code that appears in the data, with its label. Do not
     leave this to a separate file that may be lost. E.g.:
+
         1   Water
         2   Snow and ice
         3   Rock and rubble
+
     Where the provider publishes a long class table, record the
     file it lives in and store that file alongside this readme.
 
