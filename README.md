@@ -6,21 +6,19 @@
 ![Lifecycle](https://img.shields.io/badge/Lifecycle-Experimental-orange)
 ![Languages](https://img.shields.io/badge/Languages-R-blue)
 
-Here, are guidelines for the internal management of geospatial data and a catalog snapshot of all of geospatial data gathered and managed by the ABMI Science Centre.
-
-
-</br>
-
-## Table of Contents
-- [1. Data Catalogs](#1-data-catalogs)
-- [2. Scripts for Extracting and Processing Spatial Data](#2-scripts-for-extracting-and-processing-spatial-data)
-- [3. Data Storage](#3-data-storage)
-- [4. Metadata Standards](#4-metadata-standards)
-- [5. Spatial Data Storage and Extraction Workflow](#5-spatial-data-storage-and-extraction-workflow)
+Guidelines for the internal management of geospatial data and a catalog snapshot of all of geospatial data gathered and managed by the ABMI Science Centre.
 
 ---
 
-## 1. Data Catalogs
+## Table of Contents
+- [Data Catalogs](#data-catalogs)
+- [Scripts for Extracting and Processing Spatial Data](#scripts-for-extracting-and-processing-spatial-data)
+- [Data Storage](#data-storage)
+- [Metadata Standards](#metadata-standards)
+
+---
+
+## Data Catalogs
 
 ### Internal Catalog
 - Spatial data stored on the Science Centre's server: 
@@ -41,13 +39,13 @@ Here, are guidelines for the internal management of geospatial data and a catalo
 
 ---
 
-## 2. Scripts for Extracting and Processing Spatial Data
+## Scripts for Extracting and Processing Spatial Data
 
 - [internal `sciSpatialR` package](https://github.com/ABbiodiversity/sciSpatialR)
 
 ---
 
-## 3. Data Storage
+## Data Storage
 
 Once downloaded, data should be stored in a spatial data directory in folders organized by data thematic type. The script [create_spatial_data_dir.py](scripts/create_spatial_data_dir.py) can be used to create an empty directory. Each spatial dataset should be stored in a subfolder stored within the corresponding thematic folder. Thematic folders are based on [ISO 19115 Topic Categories](https://nap.geogratis.gc.ca/metadata/register/registerItems-eng.html#RI_653). 
 
@@ -138,7 +136,7 @@ staged copy once the move is verified.
 
 ---
 
-## 4. Metadata Standards
+## Metadata Standards
 
 Metadata is recorded in plain-text `readme.txt` files that comply with
 the [North American Profile (NAP) of the ISO 19115: Geographic
