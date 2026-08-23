@@ -1,7 +1,7 @@
 <img src="figures/abmi_logo.png" alt="ABMI Logo" width="300" style="margin-top: 40px;">
 
 
-# Geospatial Data Catalog and Management Guide
+# Geospatial Data Management Guide
 ![In Development](https://img.shields.io/badge/Status-In%20Development-yellow)
 ![Lifecycle](https://img.shields.io/badge/Lifecycle-Experimental-orange)
 ![Languages](https://img.shields.io/badge/Languages-R-blue)
