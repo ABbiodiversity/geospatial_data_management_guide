@@ -6,6 +6,12 @@
 ![Lifecycle](https://img.shields.io/badge/Lifecycle-Experimental-orange)
 ![Languages](https://img.shields.io/badge/Languages-R-blue)
 
+
+> [!IMPORTANT]
+> This reposotory is developed by and for the Science Centre at the Alberta Biodiversity Monitoring
+Institute (ABMI). It is intended for internal use.
+> 
+
 Guidelines for the internal management of geospatial data at the ABMI Science Centre, along with a catalogue snapshot of the geospatial datasets the Science Centre holds and maintains.
 
 ---
@@ -189,4 +195,10 @@ Two rules keep the split honest:
    provider's published resolution can be described as prose in the
    product abstract, but the measured resolution, CRS, and extent of a
    file belong only to the variant that holds that file.
+
+## Contact
+
+For questions regarding the contents of this repository or data
+access, please contact Dr. Brendan Casey at
+brendan.casey@ualberta.ca.
 
