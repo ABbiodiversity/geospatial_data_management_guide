@@ -46,6 +46,68 @@ Keywords: [Comma-separated list of keywords]
     E.g., "biodiversity", "climate change", "LiDAR"
 
 ==================================================================
+LAYERS AND BANDS
+==================================================================
+What each layer, band, or measure means. This is the product's
+semantics and is the same in every variant, so it is recorded once
+here. How the values are stored in a given copy -- data type,
+NoData value, filenames -- differs between variants and belongs in
+the variant records.
+
+Layer Count: [Number of layers, bands, or measures in the product]
+    E.g., "3". Use "1" for a single-band raster or a single-
+    attribute vector layer.
+Layer Structure: [multiband | one file per layer | single layer]
+    How the provider organizes the layers. E.g., "one file per
+    measure, band 1 of each"; "a single 12-band stack, one band per
+    month".
+Layers: [One entry per layer, in the provider's order]
+    For each, record:
+    Band: [Band number or layer/attribute name as the provider
+        labels it. E.g., "Band 1", "MAT", "landcover_class"]
+    Measure: [What the band records]
+        E.g., "Mean annual temperature".
+    Units: [Units of measurement, or "None" for categorical]
+        E.g., "degrees C", "mm", "percent", "None".
+    Measurement Scale: [continuous | ordinal | categorical | binary]
+        Determines which resampling methods are valid in the
+        variants. Categorical and binary bands require nearest
+        neighbour.
+    Valid Range: [Minimum and maximum meaningful values]
+        E.g., "-50 to 30". Use "Unbounded" if the provider states
+        none. This is the range of real values, not the range of
+        the storage type.
+    Scale Factor: [Multiplier to convert stored values to units, or
+        "1"]
+        E.g., "0.1" where the provider stores tenths of a degree as
+        integers.
+    Offset: [Value added after scaling, or "0"]
+    Description: [What the band represents and how it was measured]
+        Anything a user needs in order to read the values
+        correctly, including the provider's definition of the
+        measure.
+
+    E.g.:
+    Band: MAT
+    Measure: Mean annual temperature
+    Units: degrees C
+    Measurement Scale: continuous
+    Valid Range: -20 to 15
+    Scale Factor: 1
+    Offset: 0
+    Description: 1961-1990 climate normal, downscaled from PRISM.
+
+Class Definitions: [Value-to-class lookup for categorical bands, or
+    "None"]
+    Every code that appears in the data, with its label. Do not
+    leave this to a separate file that may be lost. E.g.:
+    1   Water
+    2   Snow and ice
+    3   Rock and rubble
+    Where the provider publishes a long class table, record the
+    file it lives in and store that file alongside this readme.
+
+==================================================================
 VARIANTS
 ==================================================================
 Variants: [List of variant folder names, one per line, indented]
