@@ -62,7 +62,8 @@ Layer Structure: [multiband | one file per layer | single layer]
     measure, band 1 of each"; "a single 12-band stack, one band per
     month".
 Layers: [One entry per layer, in the provider's order]
-    For each, record:
+    For each layer, record the following fields:
+
     Band: [Band number or layer/attribute name as the provider
         labels it. E.g., "Band 1", "MAT", "landcover_class"]
     Measure: [What the band records]
@@ -88,22 +89,22 @@ Layers: [One entry per layer, in the provider's order]
         measure.
 
     E.g.:
-    Band: MAT
-    Measure: Mean annual temperature
-    Units: degrees C
-    Measurement Scale: continuous
-    Valid Range: -20 to 15
-    Scale Factor: 1
-    Offset: 0
-    Description: 1961-1990 climate normal, downscaled from PRISM.
+        Band: MAT
+        Measure: Mean annual temperature
+        Units: degrees C
+        Measurement Scale: continuous
+        Valid Range: -20 to 15
+        Scale Factor: 1
+        Offset: 0
+        Description: 1961-1990 climate normal, downscaled from PRISM.
 
 Class Definitions: [Value-to-class lookup for categorical bands, or
     "None"]
     Every code that appears in the data, with its label. Do not
     leave this to a separate file that may be lost. E.g.:
-    1   Water
-    2   Snow and ice
-    3   Rock and rubble
+        1   Water
+        2   Snow and ice
+        3   Rock and rubble
     Where the provider publishes a long class table, record the
     file it lives in and store that file alongside this readme.
 
@@ -180,3 +181,4 @@ GAP REPORT
 ==================================================================
 EXTRACTED: [Fields taken directly from provider documentation]
 DERIVED: [Fields inferred, with the basis for each inference]
+
