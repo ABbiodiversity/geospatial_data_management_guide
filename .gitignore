@@ -20,9 +20,6 @@
 # RStudio files
 .Rproj.user/
 
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
@@ -36,21 +33,3 @@ vignettes/*.pdf
 *.knit.md
 
 
-# Ignore everything in 0_code
-0_data/*
-!0_code/*.gitkeep
-
-# Ignore everything in 2_pipeline
-2_pipeline/*
-!2_pipeline/*.gitkeep
-
-# Ignore everything in 3_output
-3_output/*
-!3_output/*.gitkeep
-
-# Ignore everything in 4_writing
-4_writing/*
-!4_writing/*.gitkeep
-
-5_presentations/*
-!5_presentations/*.gitkeep
