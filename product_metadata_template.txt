@@ -1,0 +1,120 @@
+==================================================================
+PRODUCT README
+==================================================================
+This record describes a data product as published by its provider.
+It contains information that is true of the product regardless
+of processing, such as aggregation to a 1 km or 250 m reference
+grid: what it is, who made it, when it applies, how it may be
+used, and how to cite it.
+
+It holds no geometry. Resolution, CRS, extent, format, size, and
+derivation are properties of a variant, not of the product, and
+live in the readme inside each variant folder.
+
+Directory layout:
+
+    {product_id}/
+    |-- readme.txt              <- this record
+    |-- native/
+    |   |-- readme.txt          <- variant record
+    |   `-- {product_id}_{measure}_{period}_native.tif
+    `-- abmi1km/
+        |-- readme.txt          <- variant record
+        `-- {product_id}_{measure}_{period}_abmi1km.tif
+
+==================================================================
+PRODUCT IDENTIFICATION
+==================================================================
+Title: [Data Title]
+    A descriptive title (e.g., "Alberta Land Cover 2020"). Do not
+    include resolution or grid; those distinguish variants.
+Abstract: [Brief description of the data and its key features]
+    A summary of the data's content, purpose, and spatial/temporal
+    scope. Record the provider's published resolution and coverage
+    here as prose. Measured grid geometry belongs in the variant
+    records.
+Purpose: [The intended use or application]
+    E.g., "Used to analyze land cover changes over time."
+Credits: [Names and roles of individuals or organizations
+    responsible for the data]
+    E.g., "John Doe, Principal Investigator."
+Data Language: [e.g., English]
+Topic Category: [Broad thematic classification]
+    ISO 19115-defined categories (e.g., "biota", "climatology", 
+    "environment").
+Keywords: [Comma-separated list of keywords]
+    E.g., "biodiversity", "climate change", "LiDAR"
+
+==================================================================
+VARIANTS
+==================================================================
+Variants: [List of variant folder names, one per line, indented]
+    E.g.:
+    native      As delivered by the provider. Not grid-aligned.
+    abmi1km     Aligned to the ABMI provincial 1 km reference grid.
+    Each variant folder holds its own readme with resolution, CRS,
+    extent, format, and derivation. This record holds none of
+    those.
+
+==================================================================
+TEMPORAL INFORMATION
+==================================================================
+Publication Date: [YYYY-MM-DD]
+    Date the source data was published by the provider.
+Temporal Extent:
+    Start Date: [YYYY-MM-DD]
+    End Date: [YYYY-MM-DD or "Ongoing"]
+    Time period covered by the data.
+Temporal Resolution: [Interval between observations, or "None"]
+    E.g., "Annual", "Monthly", "Single epoch".
+Version: [Provider's version or release identifier]
+    E.g., "7.31". Use "UNKNOWN" if the provider does not version
+    the product.
+
+==================================================================
+DATA QUALITY
+==================================================================
+Lineage: [How the provider produced the data. How you preprocessed 
+    the data]
+    Source imagery, models, or surveys and the provider's
+    processing. Descripion of your processing steps and 
+    transformations. Include the file names of preprocessing 
+    scripts 
+Positional Accuracy: [Accuracy as stated by the provider]
+    E.g., "horizontal accuracy plus or minus 10 m". Use "Not
+    stated" if the provider does not report it. Do not estimate.
+
+==================================================================
+ACCESS AND USE CONSTRAINTS
+==================================================================
+Use Constraints: [Licensing terms or restrictions]
+    E.g., "CC BY 4.0", "Attribution required, no redistribution".
+Access Constraints: [Any restrictions on accessing the data]
+    E.g., "Restricted to internal use only"
+
+==================================================================
+CONTACT INFORMATION
+==================================================================
+Point of Contact:
+    Name: [Person or organization responsible for the source data]
+    Role: [Contact's role in relation to the data]
+        E.g., "Data Manager", "Principal Investigator"
+    Email: [Contact email address]
+    Phone: [Contact phone number]
+Internal Steward:
+    Name: [Person responsible for this product internally]
+    Email: [Contact email address]
+
+==================================================================
+ADDITIONAL INFORMATION
+==================================================================
+Metadata Date: [YYYY-MM-DD]
+    Date this record was last updated.
+Data Citation: [Bibliography entry]
+DOI: [DOI of the source data, or "None"]
+
+==================================================================
+GAP REPORT
+==================================================================
+EXTRACTED: [Fields taken directly from provider documentation]
+DERIVED: [Fields inferred, with the basis for each inference]
