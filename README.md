@@ -8,19 +8,8 @@
 # Geospatial Data Catalog and Management Guide
 ![In Development](https://img.shields.io/badge/Status-In%20Development-yellow)
 
-Here, we provide of catalog of all of geospatial data gathered and managed by the Science Centre, and R package/vignette for querying the catalog, links to external catalogs, and guide for the internal management of geospatial data.
+Here, are guidelines for the internal management of geospatial data and a catalog snapshot of all of geospatial data gathered and managed by the ABMI Science Centre.
 
-The catalog documents all spatial data that has been pre-processed for the ABMI Science Centre. 
-
-The catalog includes:
-- Metadata for each dataset.
-- Relative paths to the data stored on the Science Centre's internal server.
-- Links to associated preprocessing scripts.
-
-In addition, a working list of predictor variables [here](https://github.com/bgcasey/spatial_data_catalog/blob/main/predictor_variable_list.csv).
-
-This is a sibling repository to the Science Centre's [Geospatial Preprocessing and Extraction Toolkit](https://github.com/bgcasey/geospatial_preprocessing_and_extraction_toolkit).
-The toolkit contains genalized preprossing scripts, Google Earth Engine functions, and a vignette for summarizing spatial data to points and polygons using R.
 
 </br>
 
@@ -36,8 +25,8 @@ The toolkit contains genalized preprossing scripts, Google Earth Engine function
 ## 1. Data Catalogs
 
 ### Internal Catalog
-- [Predictor Variable List](predictor_variable_list.csv)
-- Spatial data stored on the Science Centre's server.
+- Spatial data stored on the Science Centre's server: 
+  - [Predictor Variable List](predictor_variable_list.csv)
 
 ### External Catalogs
 
@@ -56,9 +45,7 @@ The toolkit contains genalized preprossing scripts, Google Earth Engine function
 
 ## 2. Scripts for Extracting and Processing Spatial Data
 
-- [Google Earth Engine Functions](https://github.com/bgcasey/google_earth_engine_functions)
-- R
-- ArcGIS Python
+- [internal `sciSpatialR` package](https://github.com/ABbiodiversity/sciSpatialR)
 
 ---
 
@@ -90,88 +77,123 @@ Once downloaded, data should be stored in a spatial data directory in folders or
 | **transportation**                   | Means and aids for conveying persons and/or goods.                               | Roads, airports, airstrips, shipping routes, tunnels, nautical charts, vehicle and vessel locations, aeronautical charts, railways, trails.                                        |
 | **utilitiesCommunication**           | Energy, water and waste systems, and communications infrastructure and services. | Hydro-electricity, geothermal, solar and nuclear sources of energy, water purification, sewage treatment, electricity and gas distribution, data communication, telecommunication. |
 
+### Products and variants
+
+Within a thematic folder, each **product** gets one folder. A product
+is the thing the provider published: ClimateNA, ABMI Human Footprint,
+NTEMS land cover. Inside it, each **variant** gets its own subfolder. A
+variant is that same product at one resolution, CRS, and grid
+alignment.
+
+```
+climatologyMeteorologyAtmosphere/
+└── climate_na/                                 # product
+    ├── readme.txt                              # ← product record
+    ├── native/                                 # variant
+    │   ├── readme.txt                          # ← variant record
+    │   └── climatena_mat_1961-1990_native.tif
+    └── abmi1km/                                # variant
+        ├── readme.txt                          # ← variant record
+        └── climatena_mat_1961-1990_abmi1km.tif
+```
+
+Rules:
+
+- **One folder per variant.** Never mix resolutions or grids in one
+  folder. If the resolution, CRS, or grid origin differs, it is a
+  different variant.
+- **`native`** holds the data as delivered by the provider, converted
+  in format only. It is the reference against which every derived
+  variant can be checked.
+- **Variant folder names are short and describe the grid**, not the
+  processing: `native`, `abmi1km`, `abmi250m`. The full variant
+  identifier is `{product_id}__{variant}`, e.g. `climate_na__abmi1km`.
+- **Data filenames carry the variant suffix** so a file remains
+  identifiable once it is copied out of the directory:
+  `{product_id}_{measure}_{period}_{variant}.tif`.
+- **Every folder at both levels holds a `readme.txt`.** A variant
+  folder without one is undocumented data.
+
+### The _temp folder
+
+`create_spatial_data_dir.py` also creates a `_temp/` folder alongside the
+thematic folders. It is the staging area for anything not yet ready to
+be filed. Data sits in `_temp/` for one of three reasons:
+
+- **It still needs preprocessing.** Raw downloads, GEE exports pulled
+  from Google Drive, and raster tiles waiting to be mosaicked.
+- **It has no readme yet.** The files may be final, but until the
+  product and variant records are written the data cannot be filed.
+- **It is being staged.** Processing and documentation are done, and
+  the variant is being checked — grid alignment verified, filenames
+  and sizes confirmed — before it moves.
+
+Give each item its own subfolder in `_temp/`, named for its
+`product_id`, so partly finished work is not mixed together.
+
+Nothing in `_temp/` is catalogued, and nothing in it should be used in
+an analysis or referenced by a script. It is not a second storage
+location; it is a queue. Something moves out of `_temp/` once it has a
+product folder with at least one variant subfolder, a `readme.txt` at
+both levels, and files named with the variant suffix. Delete the
+staged copy once the move is verified.
+
+A `_temp/` subfolder that has not changed in months is either abandoned
+work or undocumented data that someone is quietly relying on. Both are
+worth resolving.
+
 ---
 
 ## 4. Metadata Standards
 
-Spatial data folders should include all data and metadata necessary to ensure efficient and reproducible workflows.
+Metadata is recorded in plain-text `readme.txt` files that comply with
+the **[North American Profile (NAP) of the ISO 19115: Geographic
+Information – Metadata
+Standard](https://www.fgdc.gov/standards/projects/incits-l1-standards-projects/NAP-Metadata)**.
 
-**Table 2.** Directory structure for organizing spatial data and metadata, including descriptions of folder contents and file types.
+Metadata is split across two levels, matching the product/variant
+directory structure described in
+[Section 3](#3-data-storage). Each fact is recorded once, at the level
+where it is actually true.
 
-| **Item**          | **Description**                                                                                                                                                                                                  |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **data_type/**    | Folder for organizing data by thematic type, including climate, vegetation structure, spectral imagery, elevation, or land use. This structure ensures clarity and accessibility for various spatial data types. |
-| ├── **data/**     | Folder containing the spatial data (rasters, shapefiles) and metadata                                                                                                                                            |
-| │   ├── data.tif  | Raster data                                                                                                                                                                                                      |
-| │   ├── data.shp  | Vector data                                                                                                                                                                                                      |
-| │   ├── readme.md | Readme file includes product metadata, description, citation, and GitHub links to preprocessing scripts.                                                                                                         |
+| Record | Template | Describes |
+| --- | --- | --- |
+| **Product readme** — `{product}/readme.txt` | [product_metadata_template.txt](product_metadata_template.txt) | The data as published by the provider: what it is, who made it, when it covers, how it may be used, how to cite it. |
+| **Variant readme** — `{product}/{variant}/readme.txt` | [variant_metadata_template.txt](variant_metadata_template.txt) | The geometry and provenance of one processed copy: resolution, CRS, extent, grid alignment, derivation, format. |
 
+The two records read together as the full description of a file. A
+variant readme does not repeat the product's title, abstract, licence,
+contacts, or citation; it points at the parent record instead.
 
+**Table 2.** Which record holds which metadata block.
 
-All spatial data should include a `readme.txt` file with metadata that complies with the **[North American Profile (NAP) of the ISO 19115: Geographic Information – Metadata Standard](https://www.fgdc.gov/standards/projects/incits-l1-standards-projects/NAP-Metadata)**. Metadata should include:
+| Block | Product | Variant |
+| --- | :---: | :---: |
+| Title, Abstract, Purpose, Credits, Language, Topic Category, Keywords | ✓ | — |
+| Layers and bands (measure, units, scale, valid range, class definitions) | ✓ | — |
+| Variant list | ✓ | — |
+| Temporal information (publication date, extent, resolution, version) | ✓ | — |
+| Lineage — the provider's processing | ✓ | — |
+| Positional accuracy — as stated by the provider | ✓ | — |
+| Use and access constraints | ✓ | — |
+| Online resource (provider URL) | ✓ | — |
+| Contact and internal steward | ✓ | — |
+| Citation, DOI | ✓ | — |
+| Spatial resolution | — | ✓ |
+| Geographic information (CRS, extent, native extent) | — | ✓ |
+| Reference grid alignment | — | ✓ |
+| Derivation (input, operation, method, script, commit, version) | — | ✓ |
+| Lineage — this processing step | — | ✓ |
+| Positional accuracy — of this variant | — | ✓ |
+| Known caveats | — | ✓ |
 
+Two rules keep the split honest:
 
-- **Title**: Clear and descriptive name.
-- **Abstract**: Concise summary of the dataset's purpose, content, and scope.
-- **Spatial Extent**: Bounding coordinates.
-- **Temporal Extent**: Timeframe of data (e.g., 2010–2020 or "Ongoing").
-- **Spatial and Temporal Resolution**: The granularity of the data (e.g., "30m resolution, monthly intervals").
-- **Lineage**: Origin, processing history, and data sources.
-- **Access and Use Constraints**: Licensing, usage rights, and restrictions.
+1. **Never copy a field down.** If the provider states ±10 m horizontal
+   accuracy, that belongs in the product record. Do not restate it in a
+   variant record; aggregating to 1 km invalidates it.
+2. **Never state geometry up.** The provider's published resolution can
+   be described as prose in the product abstract, but the measured
+   resolution, CRS, and extent of a file belong only to the variant
+   that holds that file.
 
-See the [Spatial Metadata Template](spatial_metadata_template.txt) for more information. 
-
-
----
-
-## 5. Spatial Data Storage and Extraction Workflow
-
-The workflow begins with sourceing biologically relevent spatial data determining if it needs to be manaully derived using Google Earth Engine (GEE). If yes, preprocessing is done using GEE. Once preprocessed the spatial data is exported to a personal Google Drive folder, and subsequently stored in a temporary folder for further preprocessing. Non-GEE data is assessed to check if preprocessing is required. If preprocessing is necessary, the data is also stored in the temporary folder and processed. Once ready, preprocessed data is stored within a subdirectory of the thematic folder corresponding to its topic category (e.g. biota, elevation, or inlandWaters). Along with the spatial data, a metadata file documenting the preprocessing steps is within the same directory. Finally, the processed data is extracted to specific points for further analysis. 
-
-
-```mermaid
-graph TD
-    A[Source Spatial Data] --> B{Is the data <br> derived using Google Earth Engine?}
-    B -->|Yes| C[Preprocess in GEE]
-    B -->|No| D{Does the data <br> require preprocessing?}
-    C --> E[[Save and Document Preprocessing Code]]
-    C --> F[Download to Personal Google Drive Folder]
-    F --> G[/Temp Folder/]
-    G --> H[Preprocess Data: e.g., mosaic raster tiles, spatial transformations, focal analyses, etc]    
-    H --> E
-    H ---> I[/Thematic Folder/]
-    
-    D -->|Yes| G
-    D -->|No| I
-    J[[Readme with Metadata]]
-    
-    I --> L[(Data Catalog)]
-    J --> L
-    J --> I
-    E --> L
-    I --> K[Extract Data to Points]
-
-
-    %% Node styles with clean white background and adjusted stroke widths
-    style A fill:#FFFFFF,stroke:#000000,stroke-width:1px,color:black
-    style B fill:#FFFFFF,stroke:#000000,stroke-width:2px,color:black
-    style C fill:#FFFFFF,stroke:#000000,stroke-width:1px,color:black
-    style D fill:#FFFFFF,stroke:#000000,stroke-width:2px,color:black
-    style E fill:#FFFFFF,stroke:#000000,stroke-width:3px,color:black
-    style F fill:#FFFFFF,stroke:#000000,stroke-width:1px,color:black
-    style G fill:#FFFFFF,stroke:#000000,stroke-width:1px,color:black
-    style H fill:#FFFFFF,stroke:#000000,stroke-width:1px,color:black
-    style I fill:#FFFFFF,stroke:#000000,stroke-width:3px,color:black
-    style J fill:#FFFFFF,stroke:#000000,stroke-width:3px,color:black
-    style K fill:#FFFFFF,stroke:#000000,stroke-width:1px,color:black
-    style L fill:#f4f4f4,stroke:#000000,stroke-width:3px,color:black
-
-    %% Connector styles for "Yes" and "No"
-    linkStyle 0 stroke:#000000,stroke-width:1px,fill:none,color:black
-    linkStyle 1 stroke:#000000,stroke-width:1px,fill:none,color:black
-    linkStyle 2 stroke:#000000,stroke-width:1px,fill:none,color:black
-    linkStyle 3 stroke:#000000,stroke-width:1px,fill:none,color:black
-
-```
-
-**Figure 1.** Conceptual diagram of the Science Centre's geospatial data managemet workflow, including sourcing, preprocessing, storage, and extraction.

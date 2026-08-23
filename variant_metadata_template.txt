@@ -1,0 +1,113 @@
+==================================================================
+VARIANT README
+==================================================================
+This record describes one variant of a product: the same data at a
+particular resolution, CRS, and grid alignment.
+
+Identification, temporal coverage, constraints, contacts, and
+citation are defined once in the parent product readme and are not
+repeated here. Read the two together.
+
+==================================================================
+VARIANT IDENTIFICATION
+==================================================================
+Variant ID: [Unique variant identifier]
+    Convention: {product_id}__{variant}. E.g., "climate_na__abmi1km".
+Product ID: [Identifier of the parent product]
+    Must match the Product ID in the parent record.
+Parent Record: [Relative path to the product readme]
+    Usually "../readme.txt". All identification, temporal,
+    constraint, contact, and citation fields are defined there and
+    are not repeated here.
+Spatial Resolution: [Resolution of this variant]
+    E.g., "1000 m". For the unprocessed variant, the resolution as
+    delivered by the provider.
+
+==================================================================
+GEOGRAPHIC INFORMATION
+==================================================================
+Coordinate Reference System:
+    Name: [CRS name as reported by the file]
+        E.g., "NAD83 / Alberta 10-TM (Forest)"
+    Authority Code: [AUTHORITY:CODE]
+        E.g., "EPSG:3400". Record only if an ID[] node is present
+        in the WKT. Do not reverse-derive from projection
+        parameters.
+    Datum: [Geodetic datum]
+        E.g., "North American Datum 1983"
+    Projection: [Projection method]
+        E.g., "Transverse Mercator"
+    Vertical CRS: [Vertical CRS, or "None"]
+Extent:
+    West Bounding Coordinate: [e.g., -120.0]
+    East Bounding Coordinate: [e.g., -110.0]
+    North Bounding Coordinate: [e.g., 60.0]
+    South Bounding Coordinate: [e.g., 48.5]
+    Geographic extent in decimal degrees (WGS 84), regardless of
+    the native CRS.
+
+==================================================================
+REFERENCE GRID ALIGNMENT
+==================================================================
+Grid ID: [Reference grid identifier, or "None"]
+    Use "None" for variants not aligned to a reference grid.
+Snap Target: [Filename of the grid template used, or "None"]
+    E.g., "abmi_1km_v1_template.tif"
+Alignment Verified: [Yes | No]
+    Yes only after CRS, resolution, extent, and origin have been
+    checked against the template. Record the date and method used.
+
+==================================================================
+DERIVATION
+==================================================================
+Derived From: [Variant ID of the input, or "Source"]
+    Use "Source" for the variant created directly from provider
+    files.
+Operation: [aggregate | resample | reproject | mask | none]
+    Use "none" for an unmodified variant.
+Method: [Method appropriate to the operation and data type]
+    E.g., "mean" or "mode" for aggregation; "bilinear" or "near"
+    for resampling. Nearest neighbour is required for categorical
+    data. Where bands differ, record the method used for each,
+    naming the bands as the parent record's Layers block does.
+NoData Rule: [How partial or missing source cells were handled]
+    E.g., "Cells with more than 50 percent NoData in the source
+    window were set to NoData rather than partially averaged."
+Preprocessing Script: [Path to the script within the package repo]
+    E.g., "data-raw/{product_id}.R"
+Script Commit: [Git commit SHA of the script at time of processing]
+    Short SHA is sufficient. Records the exact code used; the
+    script itself is not copied here.
+Package Version: [Package name and version used]
+    E.g., "sciSpatialR 0.1.0"
+Created: [YYYY-MM-DD]
+Created By: [Name of the person who produced this variant]
+
+==================================================================
+DATA QUALITY
+==================================================================
+Lineage: [Processing applied to produce this variant from its input]
+    Describe only this step. Provider lineage belongs in the parent
+    record; the two read together as the full history.
+Positional Accuracy: [Accuracy of this variant, or "Not assessed"]
+    Do not carry forward the source accuracy statement; it does not
+    account for error introduced by this processing step.
+Known Caveats: [Conditions under which this variant will mislead]
+    E.g., regions or classes where the derivation degrades the
+    data, unmasked areas, or cases where a different variant is
+    more appropriate. Leave blank only if none are known.
+
+==================================================================
+DISTRIBUTION INFORMATION
+==================================================================
+Format Name: [File format]
+    E.g., "GeoTIFF (COG)", "GeoPackage"
+Data Type: [Storage data type] E.g., "INT2S", "FLT4S"
+Size: [Total size of this variant]
+    E.g., "4.2 GB"
+
+==================================================================
+ADDITIONAL INFORMATION
+==================================================================
+Metadata Date: [YYYY-MM-DD]
+    Date this record was last updated.

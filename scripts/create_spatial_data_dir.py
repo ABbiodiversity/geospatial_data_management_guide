@@ -12,8 +12,9 @@ notes:
   based on ISO topic categories. Each top-level folder corresponds
   to a topic category and contains subfolders for specific data
   types. Each top-level folder includes a `readme.txt` file with
-  the category's description and example data types. A `temp`
-  folder is created for preprocessing products.
+  the category's description and example data types. A `_temp`
+  folder is created for staging data that is not yet ready to
+  be filed.
 ---
 """
 
@@ -131,18 +132,25 @@ base_dir = "spatialData"
 os.makedirs(base_dir, exist_ok=True)
 
 ## 3.2 Create Temp Folder
-temp_dir = os.path.join(base_dir, "temp")
+temp_dir = os.path.join(base_dir, "_temp")
 os.makedirs(temp_dir, exist_ok=True)
 
 temp_readme_path = os.path.join(temp_dir, "readme.txt")
 with open(temp_readme_path, "w") as temp_readme:
     temp_text = (
-        "This folder is used for storing spatial data products that "
-        "require preprocessing. Once preprocessing is complete, move "
-        "the data to the appropriate thematic folder."
+        "Staging area for spatial data that is not yet ready to be "
+        "filed. Data belongs here while it still needs preprocessing, "
+        "while its product and variant readme files are being written, "
+        "or while a finished variant is being checked before it moves. "
+        "Give each item its own subfolder named for its product_id. "
+        "Nothing here is catalogued, and nothing here should be used "
+        "in an analysis or referenced by a script. Move an item to its "
+        "thematic folder once it has a product folder with at least "
+        "one variant subfolder and a readme.txt at both levels, then "
+        "delete the staged copy."
     )
     temp_readme.write(wrap_text(temp_text))
-print("Created temp folder and its readme.txt file.")
+print("Created _temp folder and its readme.txt file.")
 
 ## 3.3 Create Topic Category Folders
 for category, content in iso_topic_categories.items():

@@ -1,0 +1,182 @@
+==================================================================
+PRODUCT README
+==================================================================
+This record describes a data product as published by its provider.
+It contains information that is true of the product regardless
+of processing, such as aggregation to a 1 km or 250 m reference
+grid: what it is, who made it, when it applies, how it may be
+used, and how to cite it.
+
+It holds no geometry. Resolution, CRS, extent, format, size, and
+derivation are properties of a variant, not of the product, and
+live in the readme inside each variant folder.
+
+Directory layout:
+
+    {product_id}/
+    |-- readme.txt              <- this record
+    |-- native/
+    |   |-- readme.txt          <- variant record
+    |   `-- {product_id}_{measure}_{period}_native.tif
+    `-- abmi1km/
+        |-- readme.txt          <- variant record
+        `-- {product_id}_{measure}_{period}_abmi1km.tif
+
+==================================================================
+PRODUCT IDENTIFICATION
+==================================================================
+Title: [Data Title]
+    A descriptive title (e.g., "Alberta Land Cover 2020"). Do not
+    include resolution or grid; those distinguish variants.
+Abstract: [Brief description of the data and its key features]
+    A summary of the data's content, purpose, and spatial/temporal
+    scope. Record the provider's published resolution and coverage
+    here as prose. Measured grid geometry belongs in the variant
+    records.
+Purpose: [The intended use or application]
+    E.g., "Used to analyze land cover changes over time."
+Credits: [Names and roles of individuals or organizations
+    responsible for the data]
+    E.g., "John Doe, Principal Investigator."
+Data Language: [e.g., English]
+Topic Category: [Broad thematic classification]
+    ISO 19115-defined categories (e.g., "biota", "climatology", 
+    "environment").
+Keywords: [Comma-separated list of keywords]
+    E.g., "biodiversity", "climate change", "LiDAR"
+
+==================================================================
+LAYERS AND BANDS
+==================================================================
+What each layer, band, or measure means. This is the product's
+semantics and is the same in every variant, so it is recorded once
+here. How the values are stored in a given copy -- data type,
+NoData value, filenames -- differs between variants and belongs in
+the variant records.
+
+Layer Count: [Number of layers, bands, or measures in the product]
+    E.g., "3". Use "1" for a single-band raster or a single-
+    attribute vector layer.
+Layer Structure: [multiband | one file per layer | single layer]
+    How the provider organizes the layers. E.g., "one file per
+    measure, band 1 of each"; "a single 12-band stack, one band per
+    month".
+Layers: [One entry per layer, in the provider's order]
+    For each, record:
+    Band: [Band number or layer/attribute name as the provider
+        labels it. E.g., "Band 1", "MAT", "landcover_class"]
+    Measure: [What the band records]
+        E.g., "Mean annual temperature".
+    Units: [Units of measurement, or "None" for categorical]
+        E.g., "degrees C", "mm", "percent", "None".
+    Measurement Scale: [continuous | ordinal | categorical | binary]
+        Determines which resampling methods are valid in the
+        variants. Categorical and binary bands require nearest
+        neighbour.
+    Valid Range: [Minimum and maximum meaningful values]
+        E.g., "-50 to 30". Use "Unbounded" if the provider states
+        none. This is the range of real values, not the range of
+        the storage type.
+    Scale Factor: [Multiplier to convert stored values to units, or
+        "1"]
+        E.g., "0.1" where the provider stores tenths of a degree as
+        integers.
+    Offset: [Value added after scaling, or "0"]
+    Description: [What the band represents and how it was measured]
+        Anything a user needs in order to read the values
+        correctly, including the provider's definition of the
+        measure.
+
+    E.g.:
+    Band: MAT
+    Measure: Mean annual temperature
+    Units: degrees C
+    Measurement Scale: continuous
+    Valid Range: -20 to 15
+    Scale Factor: 1
+    Offset: 0
+    Description: 1961-1990 climate normal, downscaled from PRISM.
+
+Class Definitions: [Value-to-class lookup for categorical bands, or
+    "None"]
+    Every code that appears in the data, with its label. Do not
+    leave this to a separate file that may be lost. E.g.:
+    1   Water
+    2   Snow and ice
+    3   Rock and rubble
+    Where the provider publishes a long class table, record the
+    file it lives in and store that file alongside this readme.
+
+==================================================================
+VARIANTS
+==================================================================
+Variants: [List of variant folder names, one per line, indented]
+    E.g.:
+    native      As delivered by the provider. Not grid-aligned.
+    abmi1km     Aligned to the ABMI provincial 1 km reference grid.
+    Each variant folder holds its own readme with resolution, CRS,
+    extent, format, and derivation. This record holds none of
+    those.
+
+==================================================================
+TEMPORAL INFORMATION
+==================================================================
+Publication Date: [YYYY-MM-DD]
+    Date the source data was published by the provider.
+Temporal Extent:
+    Start Date: [YYYY-MM-DD]
+    End Date: [YYYY-MM-DD or "Ongoing"]
+    Time period covered by the data.
+Temporal Resolution: [Interval between observations, or "None"]
+    E.g., "Annual", "Monthly", "Single epoch".
+Version: [Provider's version or release identifier]
+    E.g., "7.31". Use "UNKNOWN" if the provider does not version
+    the product.
+
+==================================================================
+DATA QUALITY
+==================================================================
+Lineage: [How the provider produced the data. How you preprocessed 
+    the data]
+    Source imagery, models, or surveys and the provider's
+    processing. Descripion of your processing steps and 
+    transformations. Include the file names of preprocessing 
+    scripts 
+Positional Accuracy: [Accuracy as stated by the provider]
+    E.g., "horizontal accuracy plus or minus 10 m". Use "Not
+    stated" if the provider does not report it. Do not estimate.
+
+==================================================================
+ACCESS AND USE CONSTRAINTS
+==================================================================
+Use Constraints: [Licensing terms or restrictions]
+    E.g., "CC BY 4.0", "Attribution required, no redistribution".
+Access Constraints: [Any restrictions on accessing the data]
+    E.g., "Restricted to internal use only"
+
+==================================================================
+CONTACT INFORMATION
+==================================================================
+Point of Contact:
+    Name: [Person or organization responsible for the source data]
+    Role: [Contact's role in relation to the data]
+        E.g., "Data Manager", "Principal Investigator"
+    Email: [Contact email address]
+    Phone: [Contact phone number]
+Internal Steward:
+    Name: [Person responsible for this product internally]
+    Email: [Contact email address]
+
+==================================================================
+ADDITIONAL INFORMATION
+==================================================================
+Metadata Date: [YYYY-MM-DD]
+    Date this record was last updated.
+Data Citation: [Bibliography entry]
+DOI: [DOI of the source data, or "None"]
+
+==================================================================
+GAP REPORT
+==================================================================
+EXTRACTED: [Fields taken directly from provider documentation]
+DERIVED: [Fields inferred, with the basis for each inference]
