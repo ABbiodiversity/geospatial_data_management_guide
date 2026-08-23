@@ -155,6 +155,7 @@ contacts, or citation; it points at the parent record instead.
 | Block | Product | Variant |
 | --- | :---: | :---: |
 | Title, Abstract, Purpose, Credits, Language, Topic Category, Keywords | ✓ | — |
+| Layers and bands (measure, units, scale, valid range, class definitions) | ✓ | — |
 | Variant list | ✓ | — |
 | Temporal information (publication date, extent, resolution, version) | ✓ | — |
 | Lineage — the provider's processing | ✓ | — |
@@ -170,7 +171,7 @@ contacts, or citation; it points at the parent record instead.
 | Lineage — this processing step | — | ✓ |
 | Positional accuracy — of this variant | — | ✓ |
 | Known caveats | — | ✓ |
-| Format, data type, size, NoData, measures | — | ✓ |
+| Format, data type, size | — | ✓ |
 
 Two rules keep the split honest:
 
