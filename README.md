@@ -185,11 +185,12 @@ contacts, or citation; it points at the parent record instead.
 
 Two rules keep the split honest:
 
-1. **Never copy a field down.** If the provider states ±10 m horizontal
-   accuracy, that belongs in the product record. Do not restate it in a
-   variant record; aggregating to 1 km invalidates it.
-2. **Never state geometry up.** The provider's published resolution can
-   be described as prose in the product abstract, but the measured
-   resolution, CRS, and extent of a file belong only to the variant
-   that holds that file.
+1. **Never repeat a product field in a variant record.** If the
+   provider states ±10 m horizontal accuracy, that belongs in the
+   product record. Do not restate it in a variant record; aggregating
+   to 1 km invalidates it.
+2. **Never put measured geometry in the product record.** The
+   provider's published resolution can be described as prose in the
+   product abstract, but the measured resolution, CRS, and extent of a
+   file belong only to the variant that holds that file.
 
