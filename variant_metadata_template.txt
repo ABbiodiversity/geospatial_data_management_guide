@@ -68,7 +68,8 @@ Operation: [aggregate | resample | reproject | mask | none]
 Method: [Method appropriate to the operation and data type]
     E.g., "mean" or "mode" for aggregation; "bilinear" or "near"
     for resampling. Nearest neighbour is required for categorical
-    data. Record per-measure exceptions in the measure list.
+    data. Where bands differ, record the method used for each,
+    naming the bands as the parent record's Layers block does.
 NoData Rule: [How partial or missing source cells were handled]
     E.g., "Cells with more than 50 percent NoData in the source
     window were set to NoData rather than partially averaged."
