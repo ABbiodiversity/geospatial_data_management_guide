@@ -88,15 +88,15 @@ variant is that same product at one resolution, CRS, and grid
 alignment.
 
 ```
-climatologyMeteorologyAtmosphere/
-└── climate_na/                                 # product
+geoscientificInformation/
+└── soilgrids_250_v2_ab/                                 # product
     ├── readme.txt                              # ← product record
     ├── native/                                 # variant
     │   ├── readme.txt                          # ← variant record
-    │   └── climatena_mat_1961-1990_native.tif
+    │   └── soilgrids_250_v2_ab_native.tif
     └── abmi1km/                                # variant
         ├── readme.txt                          # ← variant record
-        └── climatena_mat_1961-1990_abmi1km.tif
+        └── soilgrids_250_v2_ab_abmi1km.tif
 ```
 
 Rules:
