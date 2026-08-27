@@ -4,17 +4,27 @@ title: Create Spatial Data Directory
 author: Brendan Casey
 created: 2024-12-11
 inputs: None
-outputs: Creates a structured directory based on ISO topic categories. 
-         Generates `readme.txt` files with default descriptions of 
-         each top level folder in the directory. 
-notes: 
+outputs: Creates a structured directory based on ISO topic categories.
+         Generates `readme.txt` files with default descriptions of
+         each top level folder in the directory.
+notes:
   This script creates a structured directory for spatial data
-  based on ISO topic categories. Each top-level folder corresponds
-  to a topic category and contains subfolders for specific data
-  types. Each top-level folder includes a `readme.txt` file with
-  the category's description and example data types. A `_temp`
-  folder is created for staging data that is not yet ready to
-  be filed.
+  based on ISO topic categories, mirroring the layout of
+  \\\\ABMI-DATA2\\science\\spatial_data. Each top-level folder
+  corresponds to a topic category and holds a `readme.txt` with
+  the category's description and example data types.
+
+  Each dataset gets its own folder directly beneath the category
+  matching its primary thematic content.
+
+  A `_temp` folder is created for staging data that is not yet
+  ready to be filed.
+
+  Only the categories currently in use on the share are created.
+  The management guide defines seven more -- health,
+  intelligenceMilitary, oceans, planningCadastre, society,
+  structure, utilitiesCommunication -- which are deliberately
+  omitted.
 ---
 """
 
@@ -36,7 +46,7 @@ def wrap_text(text, width=70):
         The input text to be wrapped.
     width : int, optional
         The line width to wrap the text to (default is 70).
-    
+
     Returns
     -------
     str
@@ -47,80 +57,76 @@ def wrap_text(text, width=70):
 # 2. Define ISO Topic Categories
 # ------------------------------
 
+## Listed in ISO 19115 register order. Names are lowerCamelCase and
+## must match the register exactly -- do not rename, abbreviate, or
+## re-case them.
+
 iso_topic_categories = {
     "farming": {
         "description": "Rearing of animals and/or cultivation of "
                        "plants.",
         "examples": "Agriculture, irrigation, aquaculture, plantations, "
                     "herding, pests and diseases affecting crops and "
-                    "livestock.",
-        "subfolders": ["agriculture", "irrigation"]
+                    "livestock."
     },
     "biota": {
         "description": "Flora and/or fauna in natural environments.",
         "examples": "Wildlife, vegetation, biological sciences, ecology, "
-                    "wilderness areas, wetlands, habitat.",
-        "subfolders": ["wildlife", "vegetation", "ecology", "wetlands"]
+                    "wilderness areas, wetlands, habitat."
     },
     "boundaries": {
         "description": "Legal land descriptions.",
-        "examples": "Political and administrative boundaries.",
-        "subfolders": ["administrativeBoundaries"]
+        "examples": "Political and administrative boundaries."
     },
     "climatologyMeteorologyAtmosphere": {
         "description": "Processes and phenomena of the atmosphere.",
         "examples": "Cloud cover, weather, climate, atmospheric conditions, "
-                    "climate change, precipitation.",
-        "subfolders": ["temperature", "atmosphericConditions", 
-                       "precipitation"]
+                    "climate change, precipitation."
     },
     "economy": {
         "description": "Economic activities, conditions, and employment.",
         "examples": "Production, labor, revenue, commerce, industry, tourism, "
-                    "forestry, fisheries, commercial or subsistence hunting.",
-        "subfolders": ["forestry", "energy"]
+                    "forestry, fisheries, commercial or subsistence hunting."
     },
     "elevation": {
         "description": "Height above or below sea level.",
         "examples": "Altitude, bathymetry, digital elevation models, slope, "
-                    "derived products.",
-        "subfolders": ["DEM", "terrainAnalysis"]
+                    "derived products."
     },
     "environment": {
         "description": "Environmental resources, protection, and "
                        "conservation.",
         "examples": "Environmental pollution, waste storage and treatment, "
                     "environmental impact assessment, monitoring "
-                    "environmental risk, nature reserves.",
-        "subfolders": ["pollution", "environmentalImpact", 
-                       "riskMonitoring"]
+                    "environmental risk, nature reserves."
     },
     "geoscientificInformation": {
         "description": "Information pertaining to earth sciences.",
         "examples": "Geology, minerals, geophysical features and processes, "
                     "hydrology, glacial geology, erosion, geomorphology, "
-                    "sedimentation.",
-        "subfolders": ["geology", "soil"]
+                    "sedimentation."
     },
     "imageryBaseMapsEarthCover": {
         "description": "Base maps.",
-        "examples": "Land cover, topographic maps, imagery, annotations.",
-        "subfolders": ["landCover", "satelliteImagery"]
+        "examples": "Land cover, topographic maps, imagery, annotations."
     },
     "inlandWaters": {
         "description": "Inland water features, drainage systems, and their "
                        "characteristics.",
         "examples": "Rivers and glaciers, salt lakes, water utilization plans, "
                     "dams, currents, floods, water quality, hydrographic "
-                    "charts.",
-        "subfolders": ["rivers", "lakes", "waterQuality"]
+                    "charts."
+    },
+    "location": {
+        "description": "Positional information and services.",
+        "examples": "Addresses, geodetic networks, control points, postal "
+                    "zones, place names, and reference grids."
     },
     "transportation": {
         "description": "Means and aids for conveying persons and/or goods.",
         "examples": "Roads, airports, airstrips, shipping routes, tunnels, "
                     "nautical charts, vehicle and vessel locations, "
-                    "aeronautical charts, railways, trails.",
-        "subfolders": ["roads"]
+                    "aeronautical charts, railways, trails."
     }
 }
 
@@ -128,7 +134,7 @@ iso_topic_categories = {
 # -----------------------------
 
 ## 3.1 Define Base Directory
-base_dir = "spatialData"
+base_dir = "spatial_data"
 os.makedirs(base_dir, exist_ok=True)
 
 ## 3.2 Create Temp Folder
@@ -154,14 +160,11 @@ with open(temp_readme_path, "w") as temp_readme:
 print("Created _temp folder and its readme.txt file.")
 
 ## 3.3 Create Topic Category Folders
+## Each category holds only its readme.txt. Dataset folders are added
+## beneath it as data is acquired; there are no sub-theme folders.
 for category, content in iso_topic_categories.items():
     category_path = os.path.join(base_dir, category)
     os.makedirs(category_path, exist_ok=True)
-
-    # Create subfolders for each category
-    for subfolder in content["subfolders"]:
-        subfolder_path = os.path.join(category_path, subfolder)
-        os.makedirs(subfolder_path, exist_ok=True)
 
     # Create readme.txt file for the category
     readme_path = os.path.join(category_path, "readme.txt")
@@ -172,8 +175,8 @@ for category, content in iso_topic_categories.items():
             f"Examples: {wrap_text(content['examples'])}\n"
         )
         readme_file.write(category_text)
-    
-    print(f"Created folder structure and readme.txt for: {category}")
+
+    print(f"Created folder and readme.txt for: {category}")
 
 # End of script
 # -------------
