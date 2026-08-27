@@ -83,9 +83,28 @@ Once downloaded, data should be stored in a spatial data directory in folders or
 
 Within a thematic folder, each product gets one folder. A product
 is the thing the provider published: ClimateNA, ABMI Human Footprint,
-NTEMS land cover. Inside it, each variant gets its own subfolder. A
-variant is that same product at one resolution, CRS, and grid
-alignment.
+NTEMS land cover.
+
+**The variant split is optional.** A variant is the same product at
+one resolution, CRS, and grid alignment. Split a product into variant
+subfolders only when it is actually held at more than one of those
+combinations. Many products — file geodatabases, one-off vector
+layers, and rasters used only at the grid they were delivered on —
+are held as a single copy and need no variant subfolder and no second
+readme.
+
+**Single-copy layout.** One folder, one `readme.txt`, data files
+alongside it.
+
+```
+biota/
+└── abmi_human_footprint/                       # product
+    ├── readme.txt                              # ← single product record
+    └── abmi_human_footprint_2021.gdb
+```
+
+**Variant layout.** Used once the same product is held at a second
+resolution, CRS, or grid alignment.
 
 ```
 geoscientificInformation/
@@ -101,6 +120,17 @@ geoscientificInformation/
 
 Rules:
 
+- **Every folder that holds data holds a `readme.txt`.** Under the
+  single-copy layout that is one file; under the variant layout it is
+  one at the product level and one in each variant folder. A folder of
+  data without a readme is undocumented data.
+- **Split when the second grid arrives, not before.** To convert a
+  single-copy product to the variant layout: move the geographic
+  information, grid alignment, derivation, and distribution blocks out
+  of the single record into a variant readme in a new subfolder, keep
+  the rest of the single record as the product readme, move the data
+  files into the variant subfolder, and add the variant suffix to
+  their filenames.
 - **One folder per variant.** Never mix resolutions or grids in one
   folder. If the resolution, CRS, or grid origin differs, it is a
   different variant.
@@ -112,9 +142,9 @@ Rules:
   identifier is `{product_id}__{variant}`, e.g. `climate_na__abmi1km`.
 - **Data filenames carry the variant suffix** so a file remains
   identifiable once it is copied out of the directory:
-  `{product_id}_{measure}_{period}_{variant}.tif`.
-- **Every folder at both levels holds a `readme.txt`.** A variant
-  folder without one is undocumented data.
+  `{product_id}_{measure}_{period}_{variant}.tif`. Under the
+  single-copy layout there is no suffix to carry:
+  `{product_id}_{measure}_{period}.tif`.
 
 ### The _temp folder
 
@@ -125,9 +155,9 @@ be filed. Data sits in `_temp/` for one of three reasons:
 - **It still needs preprocessing.** Raw downloads, GEE exports pulled
   from Google Drive, and raster tiles waiting to be mosaicked.
 - **It has no readme yet.** The files may be final, but until the
-  product and variant records are written the data cannot be filed.
+  readme records are written the data cannot be filed.
 - **It is being staged.** Processing and documentation are done, and
-  the variant is being checked — grid alignment verified, filenames
+  the data is being checked — grid alignment verified, filenames
   and sizes confirmed — before it moves.
 
 Give each item its own subfolder in `_temp/`, named for its
@@ -136,9 +166,10 @@ Give each item its own subfolder in `_temp/`, named for its
 Nothing in `_temp/` is catalogued, and nothing in it should be used in
 an analysis or referenced by a script. It is not a second storage
 location; it is a queue. Something moves out of `_temp/` once it has a
-product folder with at least one variant subfolder, a `readme.txt` at
-both levels, and files named with the variant suffix. Delete the
-staged copy once the move is verified.
+product folder with a complete `readme.txt` — and, where the variant
+layout applies, a variant subfolder with its own `readme.txt` and
+files named with the variant suffix. Delete the staged copy once the
+move is verified.
 
 ---
 
@@ -149,43 +180,55 @@ the [North American Profile (NAP) of the ISO 19115: Geographic
 Information – Metadata
 Standard](https://www.fgdc.gov/standards/projects/incits-l1-standards-projects/NAP-Metadata).
 
-Metadata is split across two levels, matching the product/variant
-directory structure described in
-[Section 3](#3-data-storage). Each fact is recorded once, at the level
-where it is actually true.
+There are three templates, and which you use follows the directory
+layout described in [Data Storage](#data-storage).
+
+**A product held as one copy takes one readme.** Write a single
+product readme; it carries every block, because there is only one set
+of geometry to describe. This is the normal case for file
+geodatabases, one-off vector layers, and rasters used only at the grid
+they were delivered on.
+
+**A product held at more than one resolution, CRS, or grid alignment
+takes a split record.** Write a product readme in the product folder
+and one variant readme in each variant folder. Each fact is then
+recorded once, at the level where it is actually true.
 
 | Record | Template | Describes |
 | --- | --- | --- |
+| **Single product readme** — `{product}/readme.txt` | [single_product_metadata_template.txt](single_product_metadata_template.txt) | A product held as one copy: everything the product and variant readmes hold, in one file. Use where there are no variants. |
 | **Product readme** — `{product}/readme.txt` | [product_metadata_template.txt](product_metadata_template.txt) | The data as published by the provider: what it is, who made it, when it covers, how it may be used, how to cite it. |
 | **Variant readme** — `{product}/{variant}/readme.txt` | [variant_metadata_template.txt](variant_metadata_template.txt) | The geometry and provenance of one processed copy: resolution, CRS, extent, grid alignment, derivation, format. |
 
-The two records read together as the full description of a file. A
-variant readme does not repeat the product's title, abstract, licence,
-contacts, or citation; it points at the parent record instead.
+Under the split, the two records read together as the full description
+of a file. A variant readme does not repeat the product's title,
+abstract, licence, contacts, or citation; it points at the parent
+record instead.
 
 **Table 2.** Which record holds which metadata block.
 
-| Block | Product | Variant |
-| --- | :---: | :---: |
-| Title, Abstract, Purpose, Credits, Language, Topic Category, Keywords | ✓ | — |
-| Layers and bands (measure, units, scale, valid range, class definitions) | ✓ | — |
-| Variant list | ✓ | — |
-| Temporal information (publication date, extent, resolution, version) | ✓ | — |
-| Lineage — the provider's processing | ✓ | — |
-| Positional accuracy — as stated by the provider | ✓ | — |
-| Use and access constraints | ✓ | — |
-| Online resource (provider URL) | ✓ | — |
-| Contact and internal steward | ✓ | — |
-| Citation, DOI | ✓ | — |
-| Spatial resolution | — | ✓ |
-| Geographic information (CRS, extent, native extent) | — | ✓ |
-| Reference grid alignment | — | ✓ |
-| Derivation (input, operation, method, script, commit, version) | — | ✓ |
-| Lineage — this processing step | — | ✓ |
-| Positional accuracy — of this variant | — | ✓ |
-| Known caveats | — | ✓ |
+| Block | Single product | Product | Variant |
+| --- | :---: | :---: | :---: |
+| Title, Abstract, Purpose, Credits, Language, Topic Category, Keywords | ✓ | ✓ | — |
+| Layers and bands (measure, units, scale, valid range, class definitions) | ✓ | ✓ | — |
+| Variant list | — | ✓ | — |
+| Temporal information (publication date, extent, resolution, version) | ✓ | ✓ | — |
+| Lineage — the provider's processing | ✓ | ✓ | — |
+| Positional accuracy — as stated by the provider | ✓ | ✓ | — |
+| Use and access constraints | ✓ | ✓ | — |
+| Online resource (provider URL) | ✓ | ✓ | — |
+| Contact and internal steward | ✓ | ✓ | — |
+| Citation, DOI | ✓ | ✓ | — |
+| Spatial resolution | ✓ | — | ✓ |
+| Geographic information (CRS, extent, native extent) | ✓ | — | ✓ |
+| Reference grid alignment | ✓ | — | ✓ |
+| Derivation (input, operation, method, script, commit, version) | ✓ | — | ✓ |
+| Lineage — this processing step | ✓ | — | ✓ |
+| Positional accuracy — of this copy | ✓ | — | ✓ |
+| Known caveats | ✓ | — | ✓ |
+| Distribution (format, data type, size) | ✓ | — | ✓ |
 
-Two rules keep the split honest:
+Two rules keep the split honest wherever a product has variants:
 
 1. **Never repeat a product field in a variant record.** If the
    provider states ±10 m horizontal accuracy, that belongs in the
@@ -195,6 +238,11 @@ Two rules keep the split honest:
    provider's published resolution can be described as prose in the
    product abstract, but the measured resolution, CRS, and extent of a
    file belong only to the variant that holds that file.
+
+Neither rule applies to a single product readme: with one copy there
+is no second record to contradict, so the measured geometry and the
+provider's statements sit side by side in the same file. They start to
+apply the moment a second variant is added and the record is split.
 
 ## Contact
 

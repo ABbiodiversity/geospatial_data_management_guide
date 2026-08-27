@@ -1,0 +1,301 @@
+==================================================================
+SINGLE PRODUCT README
+==================================================================
+This record describes a product that is stored as one copy, with
+no variants. Use it when the data is filed as delivered -- or as
+processed once -- and there is no second resolution, CRS, or grid
+alignment of the same product held alongside it. Feature classes
+in a file geodatabase, one-off vector layers, and rasters used
+only at their native grid are the usual cases.
+
+Because there is only one copy, this record holds both the
+product-level facts (what it is, who made it, how it may be used)
+and the geometry of that copy (resolution, CRS, extent, format).
+It is the product readme and the variant readme merged into one
+file.
+
+Directory layout:
+
+    {product_id}/
+    |-- readme.txt              <- this record
+    `-- {product_id}_{measure}_{period}.gpkg
+
+If a second resolution, CRS, or grid alignment of this product is
+ever added, split this record: move the geographic information,
+grid alignment, derivation, and distribution blocks into a variant
+readme in a new subfolder, and keep the remaining blocks here as
+the product record. See product_metadata_template.txt and
+variant_metadata_template.txt.
+
+==================================================================
+PRODUCT IDENTIFICATION
+==================================================================
+Product ID: [Folder name for this product]
+    E.g., "abmi_human_footprint". Lower case, underscores.
+Title: [Data Title]
+    A descriptive title (e.g., "Alberta Land Cover 2020").
+Abstract: [Brief description of the data and its key features]
+    A summary of the data's content, purpose, and spatial and
+    temporal scope.
+Purpose: [The intended use or application]
+    E.g., "Used to analyze land cover changes over time."
+Credits: [Names and roles of individuals or organizations
+    responsible for the data]
+    E.g., "John Doe, Principal Investigator."
+Data Language: [e.g., English]
+Topic Category: [Broad thematic classification]
+    ISO 19115-defined categories (e.g., "biota", "climatology",
+    "environment").
+Keywords: [Comma-separated list of keywords]
+    E.g., "biodiversity", "climate change", "LiDAR"
+
+==================================================================
+LAYERS, BANDS, AND FEATURE CLASSES
+==================================================================
+What each layer, band, measure, or feature class means.
+
+For a file geodatabase or other multi-layer container, record one
+entry per feature class or table, and use the Attributes field to
+describe its columns. For a raster, record one entry per band.
+
+Layer Count: [Number of layers, bands, measures, or feature
+    classes]
+    E.g., "3". Use "1" for a single-band raster or a single-
+    attribute vector layer.
+Layer Structure: [multiband | one file per layer | single layer |
+    geodatabase | multi-layer container]
+    How the data is organized. E.g., "a single 12-band stack, one
+    band per month"; "file geodatabase with 4 feature classes".
+Layers: [One entry per layer or feature class]
+    For each layer, record the following fields:
+
+    Band: [Band number, layer name, or feature class name as
+        labelled in the file. E.g., "Band 1", "MAT",
+        "hf_polygons_2021"]
+    Measure: [What the band or feature class records]
+        E.g., "Mean annual temperature"; "Human footprint
+        polygons".
+    Geometry Type: [point | line | polygon | raster | table]
+    Units: [Units of measurement, or "None" for categorical]
+        E.g., "degrees C", "mm", "percent", "None".
+    Measurement Scale: [continuous | ordinal | categorical |
+        binary]
+        Categorical and binary bands require nearest neighbour if
+        the data is ever resampled.
+    Valid Range: [Minimum and maximum meaningful values]
+        E.g., "-50 to 30". Use "Unbounded" if the provider states
+        none, or "None" for vector layers. This is the range of
+        real values, not the range of the storage type.
+    Scale Factor: [Multiplier to convert stored values to units,
+        or "1"]
+        E.g., "0.1" where the provider stores tenths of a degree
+        as integers.
+    Offset: [Value added after scaling, or "0"]
+    NoData Value: [Value used for missing data, or "None"]
+    Attributes: [For vector layers and tables, the field names
+        with their types and meanings. "None" for rasters]
+        E.g.:
+
+            HF_TYPE     text     Footprint class, see Class
+                                 Definitions
+            YEAR        integer  Year of disturbance
+            AREA_HA     double   Polygon area in hectares
+
+    Description: [What the layer represents and how it was
+        measured]
+        Anything a user needs in order to read the values
+        correctly, including the provider's definition of the
+        measure.
+
+    E.g.:
+
+        Band: MAT
+        Measure: Mean annual temperature
+        Geometry Type: raster
+        Units: degrees C
+        Measurement Scale: continuous
+        Valid Range: -20 to 15
+        Scale Factor: 1
+        Offset: 0
+        NoData Value: -9999
+        Attributes: None
+        Description: 1961-1990 climate normal, downscaled from
+            PRISM.
+
+Class Definitions: [Value-to-class lookup for categorical bands
+    and coded attribute fields, or "None"]
+    Every code that appears in the data, with its label. Do not
+    leave this to a separate file that may be lost. E.g.:
+
+        1   Water
+        2   Snow and ice
+        3   Rock and rubble
+
+    Where the provider publishes a long class table, record the
+    file it lives in and store that file alongside this readme.
+
+==================================================================
+TEMPORAL INFORMATION
+==================================================================
+Publication Date: [YYYY-MM-DD]
+    Date the source data was published by the provider.
+Temporal Extent:
+    Start Date: [YYYY-MM-DD]
+    End Date: [YYYY-MM-DD or "Ongoing"]
+    Time period covered by the data.
+Temporal Resolution: [Interval between observations, or "None"]
+    E.g., "Annual", "Monthly", "Single epoch".
+Version: [Provider's version or release identifier]
+    E.g., "7.31". Use "UNKNOWN" if the provider does not version
+    the product.
+
+==================================================================
+GEOGRAPHIC INFORMATION
+==================================================================
+The measured geometry of the copy held in this folder.
+
+Spatial Resolution: [Resolution of this copy, or "None" for vector
+    data]
+    E.g., "1000 m". For unprocessed data, the resolution as
+    delivered by the provider.
+Coordinate Reference System:
+    Name: [CRS name as reported by the file]
+        E.g., "NAD83 / Alberta 10-TM (Forest)"
+    Authority Code: [AUTHORITY:CODE]
+        E.g., "EPSG:3400". Record only if an ID[] node is present
+        in the WKT. Do not reverse-derive from projection
+        parameters.
+    Datum: [Geodetic datum]
+        E.g., "North American Datum 1983"
+    Projection: [Projection method]
+        E.g., "Transverse Mercator"
+    Vertical CRS: [Vertical CRS, or "None"]
+Extent:
+    West Bounding Coordinate: [e.g., -120.0]
+    East Bounding Coordinate: [e.g., -110.0]
+    North Bounding Coordinate: [e.g., 60.0]
+    South Bounding Coordinate: [e.g., 48.5]
+    Geographic extent in decimal degrees (WGS 84), regardless of
+    the native CRS.
+
+==================================================================
+REFERENCE GRID ALIGNMENT
+==================================================================
+Omit this block for vector data and geodatabases.
+
+Grid ID: [Reference grid identifier, or "None"]
+    Use "None" for data not aligned to a reference grid.
+Snap Target: [Filename of the grid template used, or "None"]
+    E.g., "abmi_1km_v1_template.tif"
+Alignment Verified: [Yes | No | Not applicable]
+    Yes only after CRS, resolution, extent, and origin have been
+    checked against the template. Record the date and method used.
+
+==================================================================
+DERIVATION
+==================================================================
+How the copy in this folder was produced from the provider's
+files. If the data is filed exactly as delivered, converted in
+format only, record Operation as "none" and say so in Processing
+Lineage.
+
+Operation: [aggregate | resample | reproject | mask | clip |
+    format conversion | none]
+Method: [Method appropriate to the operation and data type, or
+    "None"]
+    E.g., "mean" or "mode" for aggregation; "bilinear" or "near"
+    for resampling. Nearest neighbour is required for categorical
+    data. Where bands differ, record the method used for each,
+    naming the bands as the Layers block does.
+NoData Rule: [How partial or missing source cells were handled, or
+    "None"]
+    E.g., "Cells with more than 50 percent NoData in the source
+    window were set to NoData rather than partially averaged."
+Preprocessing Script: [Path to the script within the package repo,
+    or "None"]
+    E.g., "data-raw/{product_id}.R"
+Script Commit: [Git commit SHA of the script at time of
+    processing, or "None"]
+    Short SHA is sufficient. Records the exact code used; the
+    script itself is not copied here.
+Package Version: [Package name and version used, or "None"]
+    E.g., "sciSpatialR 0.1.0"
+Created: [YYYY-MM-DD]
+    Date the copy in this folder was produced.
+Created By: [Name of the person who produced this copy]
+
+==================================================================
+DATA QUALITY
+==================================================================
+Provider Lineage: [How the provider produced the data]
+    Source imagery, models, or surveys and the provider's
+    processing.
+Processing Lineage: [Processing applied here to produce this copy]
+    Describe only the steps taken internally, including the file
+    names of any preprocessing scripts. Use "None. Filed as
+    delivered." where nothing was changed.
+Positional Accuracy (as published): [Accuracy as stated by the
+    provider]
+    E.g., "horizontal accuracy plus or minus 10 m". Use "Not
+    stated" if the provider does not report it. Do not estimate.
+Positional Accuracy (this copy): [Accuracy after processing, "Not
+    assessed", or "As published" where nothing was changed]
+    Do not carry the published statement forward if processing
+    could have degraded it.
+Known Caveats: [Conditions under which this data will mislead]
+    E.g., regions or classes where the data is unreliable,
+    unmasked areas, or coverage gaps. Leave blank only if none are
+    known.
+
+==================================================================
+ACCESS AND USE CONSTRAINTS
+==================================================================
+Use Constraints: [Licensing terms or restrictions]
+    E.g., "CC BY 4.0", "Attribution required, no redistribution".
+Access Constraints: [Any restrictions on accessing the data]
+    E.g., "Restricted to internal use only"
+
+==================================================================
+DISTRIBUTION INFORMATION
+==================================================================
+Format Name: [File format]
+    E.g., "GeoTIFF (COG)", "GeoPackage", "File geodatabase"
+Data Type: [Storage data type, or "None" for vector data]
+    E.g., "INT2S", "FLT4S"
+Feature Count: [Number of features per layer, or "None" for
+    rasters]
+Size: [Total size on disk]
+    E.g., "4.2 GB"
+Files: [Filenames in this folder, one per line, indented]
+    E.g.:
+    abmi_human_footprint_2021.gdb
+    hf_class_lookup.csv
+
+==================================================================
+CONTACT INFORMATION
+==================================================================
+Point of Contact:
+    Name: [Person or organization responsible for the source data]
+    Role: [Contact's role in relation to the data]
+        E.g., "Data Manager", "Principal Investigator"
+    Email: [Contact email address]
+    Phone: [Contact phone number]
+Internal Steward:
+    Name: [Person responsible for this product internally]
+    Email: [Contact email address]
+
+==================================================================
+ADDITIONAL INFORMATION
+==================================================================
+Metadata Date: [YYYY-MM-DD]
+    Date this record was last updated.
+Online Resource: [Provider URL the data was obtained from]
+Data Citation: [Bibliography entry]
+DOI: [DOI of the source data, or "None"]
+
+==================================================================
+GAP REPORT
+==================================================================
+EXTRACTED: [Fields taken directly from provider documentation]
+DERIVED: [Fields inferred, with the basis for each inference]
+MEASURED: [Fields read from the file itself, and the tool used]

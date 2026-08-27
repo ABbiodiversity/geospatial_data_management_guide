@@ -140,14 +140,15 @@ with open(temp_readme_path, "w") as temp_readme:
     temp_text = (
         "Staging area for spatial data that is not yet ready to be "
         "filed. Data belongs here while it still needs preprocessing, "
-        "while its product and variant readme files are being written, "
-        "or while a finished variant is being checked before it moves. "
+        "while its readme files are being written, or while finished "
+        "data is being checked before it moves. "
         "Give each item its own subfolder named for its product_id. "
         "Nothing here is catalogued, and nothing here should be used "
         "in an analysis or referenced by a script. Move an item to its "
-        "thematic folder once it has a product folder with at least "
-        "one variant subfolder and a readme.txt at both levels, then "
-        "delete the staged copy."
+        "thematic folder once it has a product folder with a complete "
+        "readme.txt -- and, where the product is held at more than one "
+        "resolution, CRS, or grid alignment, a variant subfolder with "
+        "its own readme.txt -- then delete the staged copy."
     )
     temp_readme.write(wrap_text(temp_text))
 print("Created _temp folder and its readme.txt file.")
