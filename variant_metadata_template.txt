@@ -8,6 +8,12 @@ Identification, temporal coverage, constraints, contacts, and
 citation are defined once in the parent product readme and are not
 repeated here. Read the two together.
 
+Variants are optional. Write this record only where the product is
+held at more than one resolution, CRS, or grid alignment. Where
+there is a single copy, the whole product is described by one
+readme in the product folder; use
+single_product_metadata_template.txt instead.
+
 ==================================================================
 VARIANT IDENTIFICATION
 ==================================================================

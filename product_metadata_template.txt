@@ -11,6 +11,12 @@ It holds no geometry. Resolution, CRS, extent, format, size, and
 derivation are properties of a variant, not of the product, and
 live in the readme inside each variant folder.
 
+Use this record only where the product is held at more than one
+resolution, CRS, or grid alignment, and therefore has variant
+subfolders. Where the product is held as a single copy, use
+single_product_metadata_template.txt instead: one folder, one
+readme, no variant subfolders.
+
 Directory layout:
 
     {product_id}/
