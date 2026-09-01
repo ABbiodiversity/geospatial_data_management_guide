@@ -51,7 +51,6 @@ Guidelines for the internal management of geospatial data at the ABMI Science Ce
 
 ---
 
-test
 
 ## Data Storage
 
