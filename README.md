@@ -139,7 +139,7 @@ Rules:
   variant can be checked.
 - **Variant folder names are short and describe the grid**, not the
   processing: `native`, `abmi1km`, `abmi250m`. The full variant
-  identifier is `{product_id}__{variant}`, e.g. `climate_na__abmi1km`.
+  identifier is `{product_id}_{variant}`, e.g. `climate_na_abmi1km`.
 - **Data filenames carry the variant suffix** so a file remains
   identifiable once it is copied out of the directory:
   `{product_id}_{measure}_{period}_{variant}.tif`. Under the

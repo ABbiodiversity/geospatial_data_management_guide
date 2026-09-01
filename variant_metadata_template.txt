@@ -18,7 +18,7 @@ single_product_metadata_template.txt instead.
 VARIANT IDENTIFICATION
 ==================================================================
 Variant ID: [Unique variant identifier]
-    Convention: {product_id}__{variant}. E.g., "climate_na__abmi1km".
+    Convention: {product_id}_{variant}. E.g., "climate_na_abmi1km".
 Product ID: [Identifier of the parent product]
     Must match the Product ID in the parent record.
 Parent Record: [Relative path to the product readme]
